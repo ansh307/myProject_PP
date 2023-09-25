@@ -1,13 +1,9 @@
 import React from "react";
-import  { useState } from 'react';
+
 // import { Navbar, Nav } from "react-bootstrap";
 
 const NavBAR = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-  
-    const handleSearch = (e) => {
-      setSearchQuery(e.target.value);
-    };
+   
 
     // const handleSearchSubmit = (e) => {
     //     e.preventDefault();
@@ -34,20 +30,7 @@ const NavBAR = () => {
           <b>UPLOAD</b>
         </a>
       </div>
-      <form className="custom-form">
-        <div className="custom-form-row">
-           <input
-            type="text"
-            className="custom-input"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <button className="custom-button" type="submit">
-            Submit
-          </button>
-        </div>
-      </form>
+     
     </div>
   );
 };

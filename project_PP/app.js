@@ -248,28 +248,26 @@ app.get("/upload", (req, res) => {
 });
 
 app.get("/api/getData", (req, res) => {
- const searchQuery = req.query.search;
-  const filteredData = searchQuery
-    ? uploadedData.filter((item) => {
-        // Customize this condition to match your filtering criteria
-        return (
-          item.Name.includes(searchQuery) ||
-          item['Enrollment No.'].includes(searchQuery) ||
-          item['Roll no.'].includes(searchQuery) ||
-          item.College.includes(searchQuery) ||
-          item.Branch.includes(searchQuery) ||
-          item.Year.includes(searchQuery) ||
-          item['Contact No.'].includes(searchQuery) ||
-          item['E Mail ID'].includes(searchQuery)
-        );
-      })
-    : uploadedData;
+  const searchQuery = req.query.search;
 
-  res.json(filteredData); // Provide the uploaded data to other routes
+  try {
+    const filteredData = searchQuery
+      ? uploadedData.filter((item) => {
+          return (
+            item.Name.includes(searchQuery) 
+          
+          );
+        })
+      : uploadedData;
+    res.json(filteredData);
+  } catch (error) {
+    console.error("Error in /api/getData:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 const PORT = process.env.PORT || 3001;
-
+ 
 app.listen(PORT, () => {
   console.log("Listening on port 3000....");
 }); 

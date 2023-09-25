@@ -4,15 +4,23 @@ class DataTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [], // Initialize as an empty array
-      filteredData: [], // Initialize as an empty array for filtered data
+      data: [],
+      filteredData: [],
       searchQuery: "", // Store the search query
     };
   }
 
   componentDidMount() {
-    // Replace this with your actual API endpoint.
-    fetch("http://localhost:3001/api/getData")
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    const { searchQuery } = this.state;
+    const apiUrl = searchQuery
+      ? `http://localhost:3001/api/getData?search=${searchQuery}`
+      : "http://localhost:3001/api/getData";
+
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
         this.setState({ data, filteredData: data });
@@ -20,12 +28,13 @@ class DataTable extends Component {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
+
 
   handleSearch = (e) => {
     const searchQuery = e.target.value;
     this.setState({ searchQuery }, () => {
-      this.filterData();
+      this.fetchData();
     });
   };
 
@@ -33,6 +42,7 @@ class DataTable extends Component {
     const { data, searchQuery } = this.state;
     const filteredData = data.filter((item) => {
       const contactNo = item["Contact No."];
+      console.log(contactNo)
       return contactNo && contactNo.includes(searchQuery);
     });
     this.setState({ filteredData });
@@ -79,6 +89,11 @@ class DataTable extends Component {
     return (
       <div className="Container mt-5">
         <h1>List of students</h1>
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={this.handleSearch}
+        />
         <form
           action="http://localhost:3001/api/submit"
           method="post"
