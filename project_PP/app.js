@@ -226,7 +226,9 @@ app.get("/api/getData", (req, res) => {
   res.type("application/json").json(uploadedData); // Provide the uploaded data to other routes
 });
 
-app.listen(3001, () => {
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => {
   console.log("Listening on port 3000....");
 });
  
