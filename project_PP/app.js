@@ -173,6 +173,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/submit", (req, res) => {
+  try{
   const selectedNames = req.body.selectedNames;
   let modifiedSelectedNames = selectedNames;
 
@@ -235,8 +236,11 @@ app.post("/api/submit", (req, res) => {
     .catch((error) => {
       console.error("Error creating Excel file:", error);
       res.status(500).send("Error creating Excel file.");
-    });
-});
+    })
+}
+catch(error) {
+  res.end("Atleast select one ,  cannot download empty excel file.");
+}});
 
 
 app.get("/upload", (req, res) => {
@@ -244,12 +248,29 @@ app.get("/upload", (req, res) => {
 });
 
 app.get("/api/getData", (req, res) => {
-  res.type("application/json").json(uploadedData); // Provide the uploaded data to other routes
+ const searchQuery = req.query.search;
+  const filteredData = searchQuery
+    ? uploadedData.filter((item) => {
+        // Customize this condition to match your filtering criteria
+        return (
+          item.Name.includes(searchQuery) ||
+          item['Enrollment No.'].includes(searchQuery) ||
+          item['Roll no.'].includes(searchQuery) ||
+          item.College.includes(searchQuery) ||
+          item.Branch.includes(searchQuery) ||
+          item.Year.includes(searchQuery) ||
+          item['Contact No.'].includes(searchQuery) ||
+          item['E Mail ID'].includes(searchQuery)
+        );
+      })
+    : uploadedData;
+
+  res.json(filteredData); // Provide the uploaded data to other routes
 });
 
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log("Listening on port 3000....");
-});
+}); 
  

@@ -43,19 +43,25 @@ class FileUploadForm extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Upload Excel Sheet</h1>
-        <form encType="multipart/form-data">
-          <input
-            type="file"
-            name="excelFile"
-            accept=".xls, .xlsx, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.ms-excel.sheet.macroenabled.12, application/vnd.ms-excel.template.macroenabled.12, application/vnd.ms-excel.sheet.binary.macroenabled.12, application/vnd.ms-excel.template, application/vnd.ms-excel.sheet.binary.macroenabled.12"
-            onChange={this.handleFileChange}
-          />
-          <button type="button" onClick={this.handleUpload}>
-            Upload
-          </button>
-        </form>
+      <div className="container upload-container">
+        <div className="box">
+          <h1>Upload Excel Sheet</h1>
+          <form encType="multipart/form-data">
+            <input
+              type="file"
+              name="excelFile"
+              accept=".xls, .xlsx, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.ms-excel.sheet.macroenabled.12, application/vnd.ms-excel.template.macroenabled.12, application/vnd.ms-excel.sheet.binary.macroenabled.12, application/vnd.ms-excel.template, application/vnd.ms-excel.sheet.binary.macroenabled.12"
+              onChange={this.handleFileChange}
+            />
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={this.handleUpload}
+            >
+              Upload
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

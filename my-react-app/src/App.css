@@ -1,4 +1,128 @@
 
 .Container{
   margin: 20px 30px;
+  margin-bottom: 150px;
+}
+
+/* NavigationBar.css */
+.Navbar {
+  margin-bottom: 20px; /* Add spacing between the navigation bar and content */
+}
+
+.Navbar a {
+  color: #fff; /* Text color for links */
+}
+
+.Navbar a:hover {
+  background-color: #0d6efd; /* Background color on hover */
+}
+
+
+.upload-container {
+  background-color: rgb(255, 255, 255);
+  height: 70vh; /* 100% of the viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  padding: 20px;
+  background-color: rgb(227, 227, 227); /* Box background color */
+  border: 1px solid #ccc; 
+  border-radius: 5px;/* Add border to the box */
+}
+
+.Navlinks{
+  color: white;
+}
+
+.navbar {
+  background-color: #007bff; /* Background color for the navbar (blue) */
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: flex-start;
+  color: white; /* Text color for links */
+}
+
+.navbar-brand a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem; /* Adjust the font size as needed */
+  font-weight: bold;
+}
+.navbar-brand{
+  padding-left: 20px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  margin: 0 15px; /* Add spacing between nav links */
+}
+
+.nav-link:hover {
+  text-decoration: underline; /* Underline links on hover */
+}
+
+
+.footer {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+
+}
+
+.footer p {
+  margin: 0;
+  font-size: 20px;
+  /* font-weight: bold; */
+}
+
+.bg-primary {
+  background-color: #007bff; /* Primary color for the footer (blue) */
+}
+
+.text-light {
+  color: #fff; /* Text color for the footer (white) */
+}
+
+.custom-form {
+  text-align: center;
+}
+
+.custom-form-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.custom-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 200px; /* Adjust the width as needed */
+}
+
+.custom-button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
 }

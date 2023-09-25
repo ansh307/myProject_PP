@@ -5,23 +5,37 @@ class DataTable extends Component {
     super(props);
     this.state = {
       data: [], // Initialize as an empty array
+      filteredData: [], // Initialize as an empty array for filtered data
+      searchQuery: "", // Store the search query
     };
   }
 
   componentDidMount() {
     // Replace this with your actual API endpoint.
     fetch("http://localhost:3001/api/getData")
-      .then((response) => {
-        // console.log(response); // Log the response object
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        // console.log(data); // Log the parsed JSON data
-        this.setState({ data });
+        this.setState({ data, filteredData: data });
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
+  }
+
+  handleSearch = (e) => {
+    const searchQuery = e.target.value;
+    this.setState({ searchQuery }, () => {
+      this.filterData();
+    });
+  };
+
+  filterData() {
+    const { data, searchQuery } = this.state;
+    const filteredData = data.filter((item) => {
+      const contactNo = item["Contact No."];
+      return contactNo && contactNo.includes(searchQuery);
+    });
+    this.setState({ filteredData });
   }
 
   handleSubmit = async (event) => {
@@ -34,7 +48,10 @@ class DataTable extends Component {
     };
 
     try {
-      const response = await fetch("http://localhost:3001/api/submit", requestOptions);
+      const response = await fetch(
+        "http://localhost:3001/api/submit",
+        requestOptions
+      );
       if (response.ok) {
         // Create a blob from the response
         const blob = await response.blob();
@@ -55,18 +72,19 @@ class DataTable extends Component {
       console.error("Error submitting the form:", error);
     }
   };
-
+  // searchQuery
   render() {
-    const { data } = this.state;
+    const {  filteredData } = this.state;
 
     return (
       <div className="Container mt-5">
-        <h1>Data Table with Checkboxes</h1>
+        <h1>List of students</h1>
         <form
           action="http://localhost:3001/api/submit"
           method="post"
           onSubmit={this.handleSubmit}
         >
+         
           <table className="table table-bordered">
             <thead>
               <tr>
@@ -80,11 +98,10 @@ class DataTable extends Component {
                 <th>Year</th>
                 <th>Contact No.</th>
                 <th>E Mail ID</th>
-                
               </tr>
             </thead>
             <tbody>
-              {data.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={index}>
                   <td>
                     <input

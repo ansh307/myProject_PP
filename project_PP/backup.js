@@ -70,3 +70,12 @@ app.post("/api/submit", (req, res) => {
         res.status(500).send("Error creating Excel file.");
       });
   });
+
+
+  <input
+  type="text"
+  className="custom-input"
+  placeholder="Search by Phone Number"
+  value={searchQuery}
+  onChange={this.handleSearch}
+/>
