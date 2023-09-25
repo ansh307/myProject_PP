@@ -60,7 +60,7 @@ class DataTable extends Component {
     const { data } = this.state;
 
     return (
-      <div className="container mt-5">
+      <div className="Container mt-5">
         <h1>Data Table with Checkboxes</h1>
         <form
           action="http://localhost:3001/api/submit"
@@ -90,7 +90,7 @@ class DataTable extends Component {
                     <input
                       type="checkbox"
                       name="selectedNames"
-                      value={item["Name"]}
+                      value={JSON.stringify(item)}
                     />
                   </td>
                   <td>{item["ID"]}</td>

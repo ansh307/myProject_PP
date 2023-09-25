@@ -174,12 +174,11 @@ app.get("/", (req, res) => {
 
 app.post("/api/submit", (req, res) => {
   const selectedNames = req.body.selectedNames;
-  console.log(selectedNames)
   let modifiedSelectedNames = selectedNames;
 
   // If only one name is selected, convert it to an array
-  if (typeof selectedNames === "string") {
-    modifiedSelectedNames = [selectedNames];
+  if (!Array.isArray(modifiedSelectedNames)) {
+    modifiedSelectedNames = [modifiedSelectedNames];
   }
 
   // Check if no names are selected
@@ -187,26 +186,47 @@ app.post("/api/submit", (req, res) => {
     return res.status(400).send("Select at least one name to download.");
   }
 
-  // Create a new Excel workbook
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Selected Names");
 
-  // Add the selected names to the worksheet
-  modifiedSelectedNames.forEach((name) => {
-    worksheet.addRow([name]);
+  // Add the column titles to the worksheet
+  worksheet.addRow([
+    "ID",
+    "Name",
+    "Enrollment No.",
+    "Roll no.",
+    "College",
+    "Branch",
+    "Year",
+    "Contact No.",
+    "E Mail ID",
+  ]);
+
+  // Add the selected data to the worksheet
+  modifiedSelectedNames.forEach((nameData) => {
+    const rowData = JSON.parse(nameData);
+    const row = [
+      rowData["ID"],
+      rowData["Name"],
+      rowData["Enrollment No."],
+      rowData["Roll no."],
+      rowData["College"],
+      rowData["Branch"],
+      rowData["Year"],
+      rowData["Contact No."],
+      rowData["E Mail ID"],
+    ];
+    worksheet.addRow(row);
   });
 
-  // Generate a unique filename for the Excel file
   const filename = `selected_names_${Date.now()}.xlsx`;
 
-  // Set response headers to make it a downloadable file
   res.setHeader(
     "Content-Type",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
   );
   res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
 
-  // Send the Excel file to the client
   workbook.xlsx
     .write(res)
     .then(() => {
@@ -217,6 +237,7 @@ app.post("/api/submit", (req, res) => {
       res.status(500).send("Error creating Excel file.");
     });
 });
+
 
 app.get("/upload", (req, res) => {
   res.render("upload");
