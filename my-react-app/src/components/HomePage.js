@@ -84,8 +84,8 @@ class DataTable extends Component {
   };
   // searchQuery
   render() {
-    const {  filteredData } = this.state;
-
+    const { filteredData } = this.state;
+  
     return (
       <div className="Container mt-5">
         <h1>List of students</h1>
@@ -99,19 +99,13 @@ class DataTable extends Component {
           method="post"
           onSubmit={this.handleSubmit}
         >
-         
           <table className="table table-bordered">
             <thead>
               <tr>
                 <th>Select</th>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Enrollment No.</th>
-                <th>Roll no.</th>
-                <th>College</th>
                 <th>Branch</th>
-                <th>Year</th>
-                <th>Contact No.</th>
                 <th>E Mail ID</th>
               </tr>
             </thead>
@@ -125,14 +119,9 @@ class DataTable extends Component {
                       value={JSON.stringify(item)}
                     />
                   </td>
-                  <td>{item["ID"]}</td>
                   <td>{item["Name"]}</td>
                   <td>{item["Enrollment No."]}</td>
-                  <td>{item["Roll no."]}</td>
-                  <td>{item["College"]}</td>
                   <td>{item["Branch"]}</td>
-                  <td>{item["Year"]}</td>
-                  <td>{item["Contact No."]}</td>
                   <td>{item["E Mail ID"]}</td>
                 </tr>
               ))}
@@ -147,6 +136,7 @@ class DataTable extends Component {
       </div>
     );
   }
+  
 }
 
 export default DataTable;
