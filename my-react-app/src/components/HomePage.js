@@ -6,12 +6,17 @@ class DataTable extends Component {
     this.state = {
       data: [],
       filteredData: [],
-      searchQuery: "", // Store the search query
+      searchQuery: "",
+      columns: [],  // Store the search query
     };
   }
 
   componentDidMount() {
     this.fetchData();
+    this.extractColumns();
+
+    console.log('filteredData:', this.state.filteredData);
+    console.log('columns:', this.state.columns);
   }
 
   fetchData = () => {
@@ -30,6 +35,22 @@ class DataTable extends Component {
       });
   };
 
+  extractColumns() {
+    const { filteredData } = this.state;
+    const columns = [];
+
+    if (filteredData.length > 0) {
+      const firstItem = filteredData[0];
+      for (const key in firstItem) {
+        if (firstItem.hasOwnProperty(key)) {
+          columns.push(key);
+        }
+      }
+    }
+
+    // Set the 'columns' in your component's state
+    this.setState({ columns: columns });
+  }
 
   handleSearch = (e) => {
     const searchQuery = e.target.value;
@@ -46,7 +67,12 @@ class DataTable extends Component {
       return contactNo && contactNo.includes(searchQuery);
     });
     this.setState({ filteredData });
+
+    
   }
+
+  
+  
 
   handleSubmit = async (event) => {
     event.preventDefault();
@@ -84,8 +110,10 @@ class DataTable extends Component {
   };
   // searchQuery
   render() {
-    const { filteredData } = this.state;
-  
+    const { filteredData, columns } = this.state;
+    console.log(filteredData , columns) // Assume 'columns' contains the list of column names
+   
+
     return (
       <div className="Container mt-5">
         <h1>List of students</h1>
@@ -103,10 +131,9 @@ class DataTable extends Component {
             <thead>
               <tr>
                 <th>Select</th>
-                <th>Name</th>
-                <th>Enrollment No.</th>
-                <th>Branch</th>
-                <th>E Mail ID</th>
+                {columns.map((columnName) => (
+                  <th key={columnName}>{columnName}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -119,10 +146,9 @@ class DataTable extends Component {
                       value={JSON.stringify(item)}
                     />
                   </td>
-                  <td>{item["Name"]}</td>
-                  <td>{item["Enrollment No."]}</td>
-                  <td>{item["Branch"]}</td>
-                  <td>{item["E Mail ID"]}</td>
+                  {columns.map((columnName) => (
+                    <td key={columnName}>{item[columnName]}</td>
+                  ))}
                 </tr>
               ))}
             </tbody>
@@ -136,6 +162,7 @@ class DataTable extends Component {
       </div>
     );
   }
+  
   
 }
 
