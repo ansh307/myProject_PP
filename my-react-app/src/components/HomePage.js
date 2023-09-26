@@ -17,8 +17,8 @@ class DataTable extends Component {
   fetchData = () => {
     const { searchQuery } = this.state;
     const apiUrl = searchQuery
-      ? `http://localhost:3001/api/getData?search=${searchQuery}`
-      : "http://localhost:3001/api/getData";
+      ? `https://backendprojectpp-production.up.railway.app/api/getData?search=${searchQuery}`
+      : "https://backendprojectpp-production.up.railway.app/api/getData";
 
     fetch(apiUrl)
       .then((response) => response.json())
@@ -59,7 +59,7 @@ class DataTable extends Component {
 
     try {
       const response = await fetch(
-        "http://localhost:3001/api/submit",
+        "https://backendprojectpp-production.up.railway.app/api/submit",
         requestOptions
       );
       if (response.ok) {
@@ -95,7 +95,7 @@ class DataTable extends Component {
           onChange={this.handleSearch}
         />
         <form
-          action="http://localhost:3001/api/submit"
+          action="https://backendprojectpp-production.up.railway.app/api/submit"
           method="post"
           onSubmit={this.handleSubmit}
         >
